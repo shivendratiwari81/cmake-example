@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+
+  - script: |
+    echo Triggering the build
+    cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX:PATH=/tmp/foo
+    cd build
+    cmake --build .
+  displayName: 'Build finidhed'
+
+  - script: |
+    echo Triggering the tests
+    ctest
+  displayName: 'Tests finidhed'
+
+  - script: |
+    echo Trigger installation
+    cmake --build . --target install
+  displayName: 'Installation finidhed'
+
